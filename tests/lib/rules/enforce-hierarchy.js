@@ -46,6 +46,21 @@ ruleTester.run("enforce-hierarchy", rule, {
             code: "import { fn } from '@modules/features/myFeature1'",
             filename: "@modules/features/myFeature2/Component.tsx",
             options,
+        }),
+        test({ // Import from non-module to module
+            code: "import { fn } from 'src/custom/folder/file'",
+            filename: "@modules/features/myFeature2/Component.tsx",
+            options,
+        }),
+        test({ // Import from module to non-module
+            code: "import { fn } from '@modules/features/myFeature1'",
+            filename: "src/custom/folder/file.ts",
+            options,
+        }),
+        test({ // Import from non-module to non-module
+            code: "import { fn } from 'src/another/custom/folder/file'",
+            filename: "src/custom/folder/file.ts",
+            options,
         })
     ],
 

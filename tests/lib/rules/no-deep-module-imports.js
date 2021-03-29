@@ -56,12 +56,24 @@ ruleTester.run("no-deep-module-imports", rule, {
             code: "import { fn } from '@modules/commons/myModule'",
             filename: "src/my/custom/very/very/deep/MyAnotherFile.js"
         }),
+        test({ // Import from non-module into non-module
+            code: "import { fn } from 'src/another/folder/file'",
+            filename: "src/my/custom/very/very/deep/MyAnotherFile.js"
+        }),
     ],
 
     invalid: [
         test({ // Deep import from another module
             code: "import { fn } from '@modules/commons/myModule/InternalFile'",
             filename: "@modules/commons/anotherModule/MyFile.js",
+            errors: [{
+                message: "HTG: Reaching deep into the module. Use modules public interface.",
+                type: "ImportDeclaration"
+            }]
+        }),
+        test({ // Deep import from non-module into module
+            code: "import { fn } from '@modules/commons/sameModule/MyFile'",
+            filename: "src/my/custom/very/very/deep/MyAnotherFile.js",
             errors: [{
                 message: "HTG: Reaching deep into the module. Use modules public interface.",
                 type: "ImportDeclaration"

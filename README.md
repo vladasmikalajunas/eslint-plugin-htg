@@ -1,6 +1,6 @@
 # eslint-plugin-htg
 
-HTG eslint plugin
+HTG Eslint plugin for enforcing modular structure
 
 ## Installation
 
