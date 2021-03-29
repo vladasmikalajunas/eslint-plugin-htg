@@ -33,7 +33,7 @@ Object keys are a module categories. Values are arrays of allowed module categor
 
 ```json
 {
-    "@v2/commons": ["@modules/commons"],
+    "@modules/commons": ["@modules/commons"],
     "@modules/models": ["@modules/models","@modules/commons"],
     "@modules/components": ["@modules/components","@modules/commons"],
     "@modules/features": ["@modules/features", "@modules/models", "@modules/components","@modules/commons"],

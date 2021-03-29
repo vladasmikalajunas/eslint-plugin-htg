@@ -13,20 +13,24 @@ var rule = require("../../../lib/rules/no-deep-module-imports"),
 
     RuleTester = require("eslint").RuleTester;
 
+const {createTest} = require("../utils");
+
 const settings = {
     htg: {
         path: {
-            '@v2/': 'client/v2/'
+            '@modules/': 'src/modules/'
         },
         modules: [
-            '@v2/commons',
-            '@v2/models',
-            '@v2/components',
-            '@v2/features',
-            '@v2/pages',
+            '@modules/commons',
+            '@modules/models',
+            '@modules/components',
+            '@modules/features',
+            '@modules/pages',
         ]
     }
 };
+
+const test = createTest(settings);
 
 //------------------------------------------------------------------------------
 // Tests
@@ -36,18 +40,32 @@ var ruleTester = new RuleTester();
 ruleTester.run("no-deep-module-imports", rule, {
 
     valid: [
-        // give me some code that won't trigger a warning
+        test({ // Import from public exports
+            code: "import { fn } from '@modules/commons/module'",
+            filename: "@modules/commons/anotherModule/MyFile.js",
+        }),
+        test({ // Deep import from the same module
+            code: "import { fn } from '@modules/commons/sameModule/MyAnotherFile'",
+            filename: "@modules/commons/sameModule/MyFile.js"
+        }),
+        test({ // Deep import from module into non-module
+            code: "import { fn } from 'src/my/custom/very/very/deep/MyAnotherFile'",
+            filename: "@modules/commons/sameModule/MyFile.js"
+        }),
+        test({ // Import from non-module into module
+            code: "import { fn } from '@modules/commons/myModule'",
+            filename: "src/my/custom/very/very/deep/MyAnotherFile.js"
+        }),
     ],
 
     invalid: [
-        {
-            code: "require('@v2/commmons/module/InternalFile')",
-            filename: "@v2/commons/anotherModule/MyFile.js",
-            settings,
+        test({ // Deep import from another module
+            code: "import { fn } from '@modules/commons/myModule/InternalFile'",
+            filename: "@modules/commons/anotherModule/MyFile.js",
             errors: [{
-                message: "Fill me in.",
-                type: "Me too"
+                message: "HTG: Reaching deep into the module. Use modules public interface.",
+                type: "ImportDeclaration"
             }]
-        }
+        }),
     ]
 });
