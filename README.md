@@ -35,7 +35,7 @@ Then configure the rules you want to use under the rules section.
 ```json
 {
     "rules": {
-        "htg/no-deep-module-imports": 2
+        "htg/no-deep-module-imports": "error"
     }
 }
 ```
@@ -70,3 +70,8 @@ Define path aliases for import resolution.
 ### `settings.htg.modules`
 
 Provide an array of paths to directories containing modules.
+
+## Rules
+
+### [`htg/enforce-hierarchy`](docs/rules/enforce-hierarchy.md)
+### [`htg/no-deep-module-imports`](docs/rules/no-deep-module-imports.md)
