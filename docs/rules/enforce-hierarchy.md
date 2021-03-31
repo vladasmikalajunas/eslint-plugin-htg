@@ -33,10 +33,22 @@ Object keys are a module categories. Values are arrays of allowed module categor
 
 ```json
 {
-    "@modules/commons": ["@modules/commons"],
-    "@modules/models": ["@modules/models","@modules/commons"],
-    "@modules/components": ["@modules/components","@modules/commons"],
-    "@modules/features": ["@modules/features", "@modules/models", "@modules/components","@modules/commons"],
-    "@modules/pages": ["@modules/pages", "@modules/features", "@modules/models", "@modules/components","@modules/commons"]
+    "category/path": ["allowed/category1", "allowed/category2"]
+}
+```
+
+### Configuration Example
+
+```json
+{
+    "rules": {
+        "htg/enforce-hierarchy": ["error", {
+            "@modules/commons": ["@modules/commons"],
+            "@modules/models": ["@modules/models","@modules/commons"],
+            "@modules/components": ["@modules/components","@modules/commons"],
+            "@modules/features": ["@modules/features", "@modules/models", "@modules/components","@modules/commons"],
+            "@modules/pages": ["@modules/pages", "@modules/features", "@modules/models", "@modules/components","@modules/commons"]
+        }]
+    }
 }
 ```
