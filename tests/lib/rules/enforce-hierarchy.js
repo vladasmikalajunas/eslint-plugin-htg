@@ -5,7 +5,6 @@
 //------------------------------------------------------------------------------
 
 var rule = require("../../../lib/rules/enforce-hierarchy"),
-
     RuleTester = require("eslint").RuleTester;
 const {createTest} = require("../utils");
 

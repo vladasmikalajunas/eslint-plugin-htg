@@ -10,7 +10,6 @@ function testFilePath(relativePath) {
 }
 
 var rule = require("../../../lib/rules/no-deep-module-imports"),
-
     RuleTester = require("eslint").RuleTester;
 
 const {createTest} = require("../utils");
