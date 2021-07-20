@@ -12,7 +12,7 @@ function testFilePath(relativePath) {
 var rule = require("../../../lib/rules/no-global-internal-imports"),
     RuleTester = require("eslint").RuleTester;
 
-const {createTest} = require("../utils");
+const {createTest} = require("../../_utils");
 
 const settings = {
     htg: {
@@ -63,23 +63,34 @@ ruleTester.run("no-global-internal-imports", rule, {
             filename: "@modules/commons/module/SomeFile.js",
             errors: [{
                 message: "HTG: Importing local dependency via global path.",
-                type: "ImportDeclaration"
-            }]
+                type: "Literal"
+            }],
+            output: "import { fn } from './utils.js'",
+        }),
+        test({ // Importing local deeply nested file via global path
+            code: "import { fn } from '@modules/commons/module/a/b/c/utils.js'",
+            filename: "@modules/commons/module/SomeFile.js",
+            errors: [{
+                message: "HTG: Importing local dependency via global path.",
+                type: "Literal"
+            }],
+            output: "import { fn } from './a/b/c/utils.js'",
         }),
         test({ // Exporting local file via global path
             code: "export { fn } from '@modules/commons/module/utils.js'",
             filename: "@modules/commons/module/index.js",
             errors: [{
                 message: "HTG: Exporting local dependency via global path.",
-                type: "ExportNamedDeclaration"
-            }]
+                type: "Literal"
+            }],
+            output: "export { fn } from './utils.js'"
         }),
-        test({ // Importing local file via global path
+        test({ // Importing local file via global public file
             code: "import { fn } from '@modules/commons/module'",
             filename: "@modules/commons/module/SomeFile.js",
             errors: [{
                 message: "HTG: Importing local dependency via global path.",
-                type: "ImportDeclaration"
+                type: "Literal"
             }]
         }),
     ]

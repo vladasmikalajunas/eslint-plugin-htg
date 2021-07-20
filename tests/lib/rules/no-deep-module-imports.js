@@ -12,7 +12,7 @@ function testFilePath(relativePath) {
 var rule = require("../../../lib/rules/no-deep-module-imports"),
     RuleTester = require("eslint").RuleTester;
 
-const {createTest} = require("../utils");
+const {createTest} = require("../../_utils");
 
 const settings = {
     htg: {
@@ -67,7 +67,7 @@ ruleTester.run("no-deep-module-imports", rule, {
             filename: "@modules/commons/anotherModule/MyFile.js",
             errors: [{
                 message: "HTG: Reaching deep into the module. Use modules public interface.",
-                type: "ImportDeclaration"
+                type: "Literal"
             }]
         }),
         test({ // Deep import from non-module into module
@@ -75,7 +75,7 @@ ruleTester.run("no-deep-module-imports", rule, {
             filename: "src/my/custom/very/very/deep/MyAnotherFile.js",
             errors: [{
                 message: "HTG: Reaching deep into the module. Use modules public interface.",
-                type: "ImportDeclaration"
+                type: "Literal"
             }]
         }),
     ]
