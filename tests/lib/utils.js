@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {createUtils} = require('../../lib/utils');
+const {createUtils, getRelativePath} = require('../../lib/utils');
 
 describe('createUtils', function () {
     let utils;
@@ -100,5 +100,28 @@ describe('createUtils', function () {
 
             assert.strictEqual(result,undefined);
         });
+    });
+});
+
+describe('getRelativePath', function () {
+    it('should return relative path for files in different directories', function () {
+        const result = getRelativePath('/a/b/c/d.js', '/a/b/x/y.js');
+
+        assert.strictEqual(result,'../x/y.js');
+    });
+    it('should return relative path for files in same directory', function () {
+        const result = getRelativePath('/a/x.js', '/a/y.js');
+
+        assert.strictEqual(result,'./y.js');
+    });
+    it('should return relative path to deeply nested directory', function () {
+        const result = getRelativePath('/d.js', '/a/b/x/y.js');
+
+        assert.strictEqual(result,'./a/b/x/y.js');
+    });
+    it('should return relative path to root of directory', function () {
+        const result = getRelativePath('/a/b/x/y.js', '/d.js');
+
+        assert.strictEqual(result,'../../../d.js');
     });
 });
