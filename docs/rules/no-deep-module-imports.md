@@ -22,7 +22,3 @@ Examples of **correct** code for this rule:
 import { Something } from 'modules/myModule';
 
 ```
-
-### Options
-
-If there are any options, describe them here. Otherwise, delete this section.

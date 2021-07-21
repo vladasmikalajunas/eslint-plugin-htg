@@ -5,9 +5,8 @@
 //------------------------------------------------------------------------------
 
 var rule = require("../../../lib/rules/enforce-hierarchy"),
-
     RuleTester = require("eslint").RuleTester;
-const {createTest} = require("../utils");
+const {createTest} = require("../../_utils");
 
 const settings = {
     htg: {
@@ -71,7 +70,7 @@ ruleTester.run("enforce-hierarchy", rule, {
             options,
             errors: [{
                 message: "HTG: Importing from forbidden module category: /src/modules/features -> /src/modules/pages.",
-                type: "ImportDeclaration"
+                type: "Literal"
             }]
         })
     ]
