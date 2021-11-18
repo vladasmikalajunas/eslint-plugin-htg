@@ -15,6 +15,7 @@ describe('createUtils', function () {
                     '@modules/components',
                     '@modules/features',
                     '@modules/pages',
+                    '@modules/apps/*/pages',
                 ]
             }
         );
@@ -46,6 +47,20 @@ describe('createUtils', function () {
         });
     });
 
+    describe('pathToVirtual', function () {
+        it('should resolve path to virtual path with wildcards', function () {
+            const result = utils.pathToVirtual('/root/src/modules/apps/demo/pages/page1/file.js');
+
+            assert.strictEqual(result, '/root/src/modules/apps/*/pages/page1/file.js');
+        });
+
+        it('should return original path if wildcard paths are not matched', function () {
+            const result = utils.pathToVirtual('/root/src/modules/some/page/here.js');
+
+            assert.strictEqual(result, '/root/src/modules/some/page/here.js');
+        });
+    });
+
     describe('stripCwd', function () {
         it('should remove CWD from path', function () {
             const result = utils.stripCwd('/root/src/modules/models/module/file.js');
@@ -69,7 +84,8 @@ describe('createUtils', function () {
                 '/root/src/modules/models',
                 '/root/src/modules/components',
                 '/root/src/modules/features',
-                '/root/src/modules/pages'
+                '/root/src/modules/pages',
+                '/root/src/modules/apps/*/pages'
             ]);
         });
     });
@@ -79,6 +95,12 @@ describe('createUtils', function () {
             const result = utils.findCategory('/root/src/modules/pages/a/index.js');
 
             assert.strictEqual(result,'/root/src/modules/pages');
+        });
+
+        it('should return absolute path to the wildcard category', function () {
+            const result = utils.findCategory('/root/src/modules/apps/*/pages/a/index.js');
+
+            assert.strictEqual(result,'/root/src/modules/apps/*/pages');
         });
 
         it('should return undefined if path is not part of cateogry', function () {
@@ -93,6 +115,12 @@ describe('createUtils', function () {
             const result = utils.findModule('/root/src/modules/pages/a/index.js');
 
             assert.strictEqual(result,'/root/src/modules/pages/a');
+        });
+
+        it('should return absolute path to the wildcard module', function () {
+            const result = utils.findModule('/root/src/modules/apps/*/pages/a/index.js');
+
+            assert.strictEqual(result,'/root/src/modules/apps/*/pages/a');
         });
 
         it('should return undefined if path is not part of module', function () {

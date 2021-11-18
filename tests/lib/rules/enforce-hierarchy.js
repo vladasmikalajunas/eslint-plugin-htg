@@ -19,6 +19,9 @@ const settings = {
             '@modules/components',
             '@modules/features',
             '@modules/pages',
+            '@modules/apps',
+            '@modules/apps/*/models',
+            '@modules/apps/*/features',
         ]
     }
 };
@@ -28,7 +31,9 @@ const options = [{
     '@modules/models': ['@modules/models', '@modules/commons'],
     '@modules/components': ['@modules/components', '@modules/commons'],
     '@modules/features': ['@modules/features', '@modules/models', '@modules/components', '@modules/commons'],
-    '@modules/pages': ['@modules/pages', '@modules/features', '@modules/models', '@modules/components', '@modules/commons']
+    '@modules/pages': ['@modules/pages', '@modules/features', '@modules/models', '@modules/components', '@modules/commons'],
+    '@modules/apps/*/models': ['@modules/apps/*/models', '@modules/models', '@modules/commons'],
+    '@modules/apps/*/features': ['@modules/apps/*/features', '@modules/apps/*/models', '@modules/features', '@modules/models', '@modules/components', '@modules/commons'],
 }];
 
 const test = createTest(settings);
