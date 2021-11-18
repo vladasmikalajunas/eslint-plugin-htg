@@ -47,17 +47,55 @@ describe('createUtils', function () {
         });
     });
 
-    describe('pathToVirtual', function () {
-        it('should resolve path to virtual path with wildcards', function () {
-            const result = utils.pathToVirtual('/root/src/modules/apps/demo/pages/page1/file.js');
+    describe('resolve2', function () {
+        it('should resolve aliased path', function () {
+            const result = utils.resolve2('@modules/models/module/file.js');
 
-            assert.strictEqual(result, '/root/src/modules/apps/*/pages/page1/file.js');
+            assert.deepStrictEqual(result, {
+                importPath: '@modules/models/module/file.js',
+                realPath: '/root/src/modules/models/module/file.js',
+                path: '/root/src/modules/models/module/file.js'
+            });
         });
 
-        it('should return original path if wildcard paths are not matched', function () {
-            const result = utils.pathToVirtual('/root/src/modules/some/page/here.js');
+        it('should resolve regular file path', function () {
+            const result = utils.resolve2('src/a/b/file.js');
 
-            assert.strictEqual(result, '/root/src/modules/some/page/here.js');
+            assert.deepStrictEqual(result, {
+                importPath: 'src/a/b/file.js',
+                realPath: '/root/src/a/b/file.js',
+                path: '/root/src/a/b/file.js'
+            });
+        });
+
+        it('should resolve navigating to parent dir', function () {
+            const result = utils.resolve2('../src/a/b/file.js');
+
+            assert.deepStrictEqual(result, {
+                importPath: '../src/a/b/file.js',
+                realPath: '/src/a/b/file.js',
+                path: '/src/a/b/file.js'
+            });
+        });
+
+        it('should resolve current dir', function () {
+            const result = utils.resolve2('./src/a/b/file.js');
+
+            assert.deepStrictEqual(result, {
+                importPath: './src/a/b/file.js',
+                realPath: '/root/src/a/b/file.js',
+                path: '/root/src/a/b/file.js'
+            });
+        });
+
+        it('should resolve path to virtual path with wildcards', function () {
+            const result = utils.resolve2('@modules/apps/demo/pages/page1/file.js');
+
+            assert.deepStrictEqual(result, {
+                importPath: '@modules/apps/demo/pages/page1/file.js',
+                realPath: '/root/src/modules/apps/demo/pages/page1/file.js',
+                path: '/root/src/modules/apps/*/pages/page1/file.js'
+            });
         });
     });
 
@@ -92,19 +130,19 @@ describe('createUtils', function () {
 
     describe('findCategory', function () {
         it('should return absolute path to the category', function () {
-            const result = utils.findCategory('/root/src/modules/pages/a/index.js');
+            const result = utils.findCategory(utils.resolveFromFullPath('/root/src/modules/pages/a/index.js'));
 
             assert.strictEqual(result,'/root/src/modules/pages');
         });
 
         it('should return absolute path to the wildcard category', function () {
-            const result = utils.findCategory('/root/src/modules/apps/*/pages/a/index.js');
+            const result = utils.findCategory(utils.resolveFromFullPath('/root/src/modules/apps/*/pages/a/index.js'));
 
             assert.strictEqual(result,'/root/src/modules/apps/*/pages');
         });
 
         it('should return undefined if path is not part of cateogry', function () {
-            const result = utils.findCategory('/root/src/a/b/c/index.js');
+            const result = utils.findCategory(utils.resolveFromFullPath('/root/src/a/b/c/index.js'));
 
             assert.strictEqual(result,undefined);
         });
@@ -112,19 +150,19 @@ describe('createUtils', function () {
 
     describe('findModule', function () {
         it('should return absolute path to the module', function () {
-            const result = utils.findModule('/root/src/modules/pages/a/index.js');
+            const result = utils.findModule(utils.resolveFromFullPath('/root/src/modules/pages/a/index.js'));
 
             assert.strictEqual(result,'/root/src/modules/pages/a');
         });
 
         it('should return absolute path to the wildcard module', function () {
-            const result = utils.findModule('/root/src/modules/apps/*/pages/a/index.js');
+            const result = utils.findModule(utils.resolveFromFullPath('/root/src/modules/apps/*/pages/a/index.js'));
 
             assert.strictEqual(result,'/root/src/modules/apps/*/pages/a');
         });
 
         it('should return undefined if path is not part of module', function () {
-            const result = utils.findModule('/root/src/a/b/c/index.js');
+            const result = utils.findModule(utils.resolveFromFullPath('/root/src/a/b/c/index.js'));
 
             assert.strictEqual(result,undefined);
         });
