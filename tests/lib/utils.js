@@ -47,9 +47,9 @@ describe('createUtils', function () {
         });
     });
 
-    describe('resolve2', function () {
+    describe('resolve', function () {
         it('should resolve aliased path', function () {
-            const result = utils.resolve2('@modules/models/module/file.js');
+            const result = utils.resolve('@modules/models/module/file.js');
 
             assert.deepStrictEqual(result, {
                 importPath: '@modules/models/module/file.js',
@@ -59,7 +59,7 @@ describe('createUtils', function () {
         });
 
         it('should resolve regular file path', function () {
-            const result = utils.resolve2('src/a/b/file.js');
+            const result = utils.resolve('src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
                 importPath: 'src/a/b/file.js',
@@ -69,7 +69,7 @@ describe('createUtils', function () {
         });
 
         it('should resolve navigating to parent dir', function () {
-            const result = utils.resolve2('../src/a/b/file.js');
+            const result = utils.resolve('../src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
                 importPath: '../src/a/b/file.js',
@@ -79,7 +79,7 @@ describe('createUtils', function () {
         });
 
         it('should resolve current dir', function () {
-            const result = utils.resolve2('./src/a/b/file.js');
+            const result = utils.resolve('./src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
                 importPath: './src/a/b/file.js',
@@ -89,7 +89,7 @@ describe('createUtils', function () {
         });
 
         it('should resolve path to virtual path with wildcards', function () {
-            const result = utils.resolve2('@modules/apps/demo/pages/page1/file.js');
+            const result = utils.resolve('@modules/apps/demo/pages/page1/file.js');
 
             assert.deepStrictEqual(result, {
                 importPath: '@modules/apps/demo/pages/page1/file.js',
