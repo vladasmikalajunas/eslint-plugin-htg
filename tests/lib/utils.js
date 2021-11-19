@@ -10,11 +10,8 @@ describe('createUtils', function () {
                     '@modules/': 'src/modules/'
                 },
                 modules: [
-                    '@modules/commons',
-                    '@modules/models',
-                    '@modules/components',
+                    '@modules/libs',
                     '@modules/features',
-                    '@modules/pages',
                     '@modules/apps/*/pages',
                 ]
             }
@@ -23,9 +20,9 @@ describe('createUtils', function () {
 
     describe('resolveFullPath', function () {
         it('should resolve aliased path', function () {
-            const result = utils.resolveFullPath('@modules/models/module/file.js');
+            const result = utils.resolveFullPath('@modules/libs/module/file.js');
 
-            assert.strictEqual(result, '/root/src/modules/models/module/file.js');
+            assert.strictEqual(result, '/root/src/modules/libs/module/file.js');
         });
 
         it('should resolve regular file path', function () {
@@ -49,12 +46,12 @@ describe('createUtils', function () {
 
     describe('resolve', function () {
         it('should resolve aliased path', function () {
-            const result = utils.resolve('@modules/models/module/file.js');
+            const result = utils.resolve('@modules/libs/module/file.js');
 
             assert.deepStrictEqual(result, {
-                raw: '@modules/models/module/file.js',
-                realPath: '/root/src/modules/models/module/file.js',
-                path: '/root/src/modules/models/module/file.js'
+                raw: '@modules/libs/module/file.js',
+                realPath: '/root/src/modules/libs/module/file.js',
+                path: '/root/src/modules/libs/module/file.js'
             });
         });
 
@@ -101,9 +98,9 @@ describe('createUtils', function () {
 
     describe('stripCwd', function () {
         it('should remove CWD from path', function () {
-            const result = utils.stripCwd('/root/src/modules/models/module/file.js');
+            const result = utils.stripCwd('/root/src/modules/libs/module/file.js');
 
-            assert.strictEqual(result, '/src/modules/models/module/file.js');
+            assert.strictEqual(result, '/src/modules/libs/module/file.js');
         });
 
         it('should keep path intact if it is not global', function () {
@@ -119,20 +116,17 @@ describe('createUtils', function () {
 
             assert.deepStrictEqual(result, [
                 '/root/src/modules/apps/*/pages',
-                '/root/src/modules/commons',
-                '/root/src/modules/models',
-                '/root/src/modules/components',
+                '/root/src/modules/libs',
                 '/root/src/modules/features',
-                '/root/src/modules/pages',
             ]);
         });
     });
 
     describe('findCategory', function () {
         it('should return absolute path to the category', function () {
-            const result = utils.findCategory(utils.resolveFromFullPath('/root/src/modules/pages/a/index.js'));
+            const result = utils.findCategory(utils.resolveFromFullPath('/root/src/modules/libs/a/index.js'));
 
-            assert.strictEqual(result,'/root/src/modules/pages');
+            assert.strictEqual(result,'/root/src/modules/libs');
         });
 
         it('should return absolute path to the wildcard category', function () {
@@ -150,9 +144,9 @@ describe('createUtils', function () {
 
     describe('findModule', function () {
         it('should return absolute path to the module', function () {
-            const result = utils.findModule(utils.resolveFromFullPath('/root/src/modules/pages/a/index.js'));
+            const result = utils.findModule(utils.resolveFromFullPath('/root/src/modules/libs/a/index.js'));
 
-            assert.strictEqual(result,'/root/src/modules/pages/a');
+            assert.strictEqual(result,'/root/src/modules/libs/a');
         });
 
         it('should return absolute path to the wildcard module', function () {

@@ -20,11 +20,8 @@ const settings = {
             '@modules/': 'src/modules/'
         },
         modules: [
-            '@modules/commons',
-            '@modules/models',
-            '@modules/components',
+            '@modules/libs',
             '@modules/features',
-            '@modules/pages',
         ]
     }
 };
@@ -40,19 +37,19 @@ ruleTester.run("no-deep-module-imports", rule, {
 
     valid: [
         test({ // Import from public exports
-            code: "import { fn } from '@modules/commons/module'",
-            filename: "@modules/commons/anotherModule/MyFile.js",
+            code: "import { fn } from '@modules/libs/module'",
+            filename: "@modules/libs/anotherModule/MyFile.js",
         }),
         test({ // Deep import from the same module
-            code: "import { fn } from '@modules/commons/sameModule/MyAnotherFile'",
-            filename: "@modules/commons/sameModule/MyFile.js"
+            code: "import { fn } from '@modules/libs/sameModule/MyAnotherFile'",
+            filename: "@modules/libs/sameModule/MyFile.js"
         }),
         test({ // Deep import from module into non-module
             code: "import { fn } from 'src/my/custom/very/very/deep/MyAnotherFile'",
-            filename: "@modules/commons/sameModule/MyFile.js"
+            filename: "@modules/libs/sameModule/MyFile.js"
         }),
         test({ // Import from non-module into module
-            code: "import { fn } from '@modules/commons/myModule'",
+            code: "import { fn } from '@modules/libs/myModule'",
             filename: "src/my/custom/very/very/deep/MyAnotherFile.js"
         }),
         test({ // Import from non-module into non-module
@@ -63,15 +60,15 @@ ruleTester.run("no-deep-module-imports", rule, {
 
     invalid: [
         test({ // Deep import from another module
-            code: "import { fn } from '@modules/commons/myModule/InternalFile'",
-            filename: "@modules/commons/anotherModule/MyFile.js",
+            code: "import { fn } from '@modules/libs/myModule/InternalFile'",
+            filename: "@modules/libs/anotherModule/MyFile.js",
             errors: [{
                 message: "HTG: Reaching deep into the module. Use modules public interface.",
                 type: "Literal"
             }]
         }),
         test({ // Deep import from non-module into module
-            code: "import { fn } from '@modules/commons/sameModule/MyFile'",
+            code: "import { fn } from '@modules/libs/sameModule/MyFile'",
             filename: "src/my/custom/very/very/deep/MyAnotherFile.js",
             errors: [{
                 message: "HTG: Reaching deep into the module. Use modules public interface.",
