@@ -118,12 +118,12 @@ describe('createUtils', function () {
             const result = utils.getCategories();
 
             assert.deepStrictEqual(result, [
+                '/root/src/modules/apps/*/pages',
                 '/root/src/modules/commons',
                 '/root/src/modules/models',
                 '/root/src/modules/components',
                 '/root/src/modules/features',
                 '/root/src/modules/pages',
-                '/root/src/modules/apps/*/pages'
             ]);
         });
     });

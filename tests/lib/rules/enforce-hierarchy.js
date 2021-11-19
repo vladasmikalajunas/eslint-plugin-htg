@@ -20,8 +20,8 @@ const settings = {
             '@modules/features',
             '@modules/pages',
             '@modules/apps',
-            '@modules/apps/*/models',
             '@modules/apps/*/features',
+            '@modules/apps/*/models',
         ]
     }
 };
@@ -75,6 +75,15 @@ ruleTester.run("enforce-hierarchy", rule, {
             options,
             errors: [{
                 message: "HTG: Importing from forbidden module category: /src/modules/features -> /src/modules/pages.",
+                type: "Literal"
+            }]
+        }),
+        test({ // Import from forbidden wildcard category
+            code: "import { fn } from '@modules/pages/myPage'",
+            filename: "@modules/apps/demo/features/unitCard/DesktopComponent.tsx",
+            options,
+            errors: [{
+                message: "HTG: Importing from forbidden module category: /src/modules/apps/*/features -> /src/modules/pages.",
                 type: "Literal"
             }]
         })
