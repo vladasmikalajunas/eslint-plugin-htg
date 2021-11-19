@@ -52,7 +52,7 @@ describe('createUtils', function () {
             const result = utils.resolve('@modules/models/module/file.js');
 
             assert.deepStrictEqual(result, {
-                importPath: '@modules/models/module/file.js',
+                raw: '@modules/models/module/file.js',
                 realPath: '/root/src/modules/models/module/file.js',
                 path: '/root/src/modules/models/module/file.js'
             });
@@ -62,7 +62,7 @@ describe('createUtils', function () {
             const result = utils.resolve('src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
-                importPath: 'src/a/b/file.js',
+                raw: 'src/a/b/file.js',
                 realPath: '/root/src/a/b/file.js',
                 path: '/root/src/a/b/file.js'
             });
@@ -72,7 +72,7 @@ describe('createUtils', function () {
             const result = utils.resolve('../src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
-                importPath: '../src/a/b/file.js',
+                raw: '../src/a/b/file.js',
                 realPath: '/src/a/b/file.js',
                 path: '/src/a/b/file.js'
             });
@@ -82,7 +82,7 @@ describe('createUtils', function () {
             const result = utils.resolve('./src/a/b/file.js');
 
             assert.deepStrictEqual(result, {
-                importPath: './src/a/b/file.js',
+                raw: './src/a/b/file.js',
                 realPath: '/root/src/a/b/file.js',
                 path: '/root/src/a/b/file.js'
             });
@@ -92,7 +92,7 @@ describe('createUtils', function () {
             const result = utils.resolve('@modules/apps/demo/pages/page1/file.js');
 
             assert.deepStrictEqual(result, {
-                importPath: '@modules/apps/demo/pages/page1/file.js',
+                raw: '@modules/apps/demo/pages/page1/file.js',
                 realPath: '/root/src/modules/apps/demo/pages/page1/file.js',
                 path: '/root/src/modules/apps/*/pages/page1/file.js'
             });
