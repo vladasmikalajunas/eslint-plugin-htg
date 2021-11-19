@@ -21,27 +21,27 @@ describe('createUtils', function () {
         );
     });
 
-    describe('resolve', function () {
+    describe('resolveFullPath', function () {
         it('should resolve aliased path', function () {
-            const result = utils.resolve('@modules/models/module/file.js');
+            const result = utils.resolveFullPath('@modules/models/module/file.js');
 
             assert.strictEqual(result, '/root/src/modules/models/module/file.js');
         });
 
         it('should resolve regular file path', function () {
-            const result = utils.resolve('src/a/b/file.js');
+            const result = utils.resolveFullPath('src/a/b/file.js');
 
             assert.strictEqual(result, '/root/src/a/b/file.js');
         });
 
         it('should resolve navigating to parent dir', function () {
-            const result = utils.resolve('../src/a/b/file.js');
+            const result = utils.resolveFullPath('../src/a/b/file.js');
 
             assert.strictEqual(result, '/src/a/b/file.js');
         });
 
         it('should resolve current dir', function () {
-            const result = utils.resolve('./src/a/b/file.js');
+            const result = utils.resolveFullPath('./src/a/b/file.js');
 
             assert.strictEqual(result, '/root/src/a/b/file.js');
         });

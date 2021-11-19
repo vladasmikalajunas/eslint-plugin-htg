@@ -11,7 +11,7 @@ const createTest = (settings) => {
     return (t) => Object.assign(
         {settings, parserOptions},
         t,
-        {filename: utils.resolve(t.filename)}
+        {filename: utils.resolveFullPath(t.filename)}
     );
 }
 
