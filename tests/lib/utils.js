@@ -66,20 +66,20 @@ describe('createUtils', function () {
         });
 
         it('should resolve navigating to parent dir', function () {
-            const result = utils.resolve('../src/a/b/file.js');
+            const result = utils.resolve('../../file.js', '/root/src/a/b/index.js');
 
             assert.deepStrictEqual(result, {
-                raw: '../src/a/b/file.js',
-                realPath: '/src/a/b/file.js',
-                path: '/src/a/b/file.js'
+                raw: '../../file.js',
+                realPath: '/root/src/file.js',
+                path: '/root/src/file.js'
             });
         });
 
         it('should resolve current dir', function () {
-            const result = utils.resolve('./src/a/b/file.js');
+            const result = utils.resolve('./file.js', '/root/src/a/b/index.js');
 
             assert.deepStrictEqual(result, {
-                raw: './src/a/b/file.js',
+                raw: './file.js',
                 realPath: '/root/src/a/b/file.js',
                 path: '/root/src/a/b/file.js'
             });
