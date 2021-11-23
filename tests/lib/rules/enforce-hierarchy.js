@@ -14,21 +14,19 @@ const settings = {
             '@modules/': 'src/modules/'
         },
         modules: [
-            '@modules/commons',
-            '@modules/models',
-            '@modules/components',
+            '@modules/libs',
             '@modules/features',
-            '@modules/pages',
+            '@modules/apps/*/libs',
+            '@modules/apps/*/features',
         ]
     }
 };
 
 const options = [{
-    '@modules/commons': ['@modules/commons'],
-    '@modules/models': ['@modules/models', '@modules/commons'],
-    '@modules/components': ['@modules/components', '@modules/commons'],
-    '@modules/features': ['@modules/features', '@modules/models', '@modules/components', '@modules/commons'],
-    '@modules/pages': ['@modules/pages', '@modules/features', '@modules/models', '@modules/components', '@modules/commons']
+    '@modules/libs': ['@modules/libs'],
+    '@modules/features': ['@modules/libs', '@modules/features'],
+    '@modules/apps/*/libs': ['@modules/apps/*/libs', '@modules/libs'],
+    '@modules/apps/*/features': ['@modules/apps/*/libs', '@modules/apps/*/features', '@modules/libs', '@modules/features'],
 }];
 
 const test = createTest(settings);
@@ -42,17 +40,17 @@ ruleTester.run("enforce-hierarchy", rule, {
 
     valid: [
         test({ // Import from the same category
-            code: "import { fn } from '@modules/features/myFeature1'",
+            code: "import { fn } from '@modules/libs/myFeature1'",
             filename: "@modules/features/myFeature2/Component.tsx",
             options,
         }),
         test({ // Import from non-module to module
             code: "import { fn } from 'src/custom/folder/file'",
-            filename: "@modules/features/myFeature2/Component.tsx",
+            filename: "@modules/libs/myFeature2/Component.tsx",
             options,
         }),
         test({ // Import from module to non-module
-            code: "import { fn } from '@modules/features/myFeature1'",
+            code: "import { fn } from '@modules/libs/myFeature1'",
             filename: "src/custom/folder/file.ts",
             options,
         }),
@@ -65,11 +63,20 @@ ruleTester.run("enforce-hierarchy", rule, {
 
     invalid: [
         test({ // Import from forbidden category
-            code: "import { fn } from '@modules/pages/myPage'",
-            filename: "@modules/features/unitCard/DesktopComponent.tsx",
+            code: "import { fn } from '@modules/features/myPage'",
+            filename: "@modules/libs/unitCard/DesktopComponent.tsx",
             options,
             errors: [{
-                message: "HTG: Importing from forbidden module category: /src/modules/features -> /src/modules/pages.",
+                message: "HTG: Importing from forbidden module category: /src/modules/libs -> /src/modules/features.",
+                type: "Literal"
+            }]
+        }),
+        test({ // Import from forbidden wildcard category
+            code: "import { fn } from '@modules/features/myPage'",
+            filename: "@modules/apps/demo/libs/unitCard/DesktopComponent.tsx",
+            options,
+            errors: [{
+                message: "HTG: Importing from forbidden module category: /src/modules/apps/*/libs -> /src/modules/features.",
                 type: "Literal"
             }]
         })
