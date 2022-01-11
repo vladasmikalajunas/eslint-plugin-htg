@@ -77,3 +77,4 @@ Provide an array of paths to directories containing modules.
 ### [`htg/no-deep-module-imports`](docs/rules/no-deep-module-imports.md)
 ### [`htg/no-global-internal-imports`](docs/rules/no-global-internal-imports.md)
 ### [`htg/no-relative-outside-imports`](docs/rules/no-relative-outside-imports.md)
+### [`htg/no-own-index-imports`](docs/rules/no-own-index-imports.md)
