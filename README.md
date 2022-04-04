@@ -71,18 +71,19 @@ Define path aliases for import resolution.
 
 Provide an array of paths to directories containing modules.
 
-### Wildcards
+### Wildcards for multi app support
 
-Wildcards are supported in the paths, but support for now is minimal:
+Primary use for wildcards is to separate different applications.
+Imports between different applications are forbidden.
+
+Wildcard support is minimal:
 - Only a single wildcard is supported:
     - Supported: `apps/*/features`
-    - Not Supported: `apps/*/features/*/components`
+    - Not Supported: `apps/*/subapps/*/features`
 - Wildcards does not support partial directory matching:
     - Supported: `apps/*/features`
     - Not Supported: `apps/prefix_*/features`
-
-Note: Primary use for wildcards is to separate different applications. Imports between different applications are forbidden.
-
+    
 ## Rules
 
 ### [`htg/enforce-hierarchy`](docs/rules/enforce-hierarchy.md)
