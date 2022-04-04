@@ -76,7 +76,16 @@ ruleTester.run("enforce-hierarchy", rule, {
             filename: "@modules/apps/demo/libs/unitCard/DesktopComponent.tsx",
             options,
             errors: [{
-                message: "HTG: Importing from forbidden module category: /src/modules/apps/*/libs -> /src/modules/features.",
+                message: "HTG: Importing from forbidden module category: /src/modules/apps/demo/libs -> /src/modules/features.",
+                type: "Literal"
+            }]
+        }),
+        test({ // Import from different wildcard categories
+            code: "import { fn } from '@modules/apps/app1/features/app1Feature'",
+            filename: "@modules/apps/app2/features/app2Feature/MyFeature.tsx",
+            options,
+            errors: [{
+                message: "HTG: Importing from forbidden module category: /src/modules/apps/app2/features -> /src/modules/apps/app1/features.",
                 type: "Literal"
             }]
         })
