@@ -7,7 +7,8 @@ describe('createUtils', function () {
     beforeEach(() => {
         utils = createUtils('/root', {
                 path: {
-                    '@modules/': 'src/modules/'
+                    '@modules/': 'src/modules/',
+                    '@absoluteModules/': '/home/Projects/project1/src/modules/'
                 },
                 modules: [
                     '@modules/libs',
@@ -23,6 +24,12 @@ describe('createUtils', function () {
             const result = utils.resolveFullPath('@modules/libs/module/file.js');
 
             assert.strictEqual(result, '/root/src/modules/libs/module/file.js');
+        });
+
+        it('should resolve aliased absolute path', function () {
+            const result = utils.resolveFullPath('@absoluteModules/libs/module/file.js');
+
+            assert.strictEqual(result, '/home/Projects/project1/src/modules/libs/module/file.js');
         });
 
         it('should resolve regular file path', function () {
