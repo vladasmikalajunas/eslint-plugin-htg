@@ -49,6 +49,11 @@ ruleTester.run("enforce-hierarchy", rule, {
             filename: "@modules/libs/myFeature2/Component.tsx",
             options,
         }),
+        test({ // Import from global to wildcarded module
+            code: "import { fn } from '@modules/libs/myFeature1'",
+            filename: "@modules/apps/app1/libs/Component.tsx",
+            options,
+        }),
         test({ // Import from module to non-module
             code: "import { fn } from '@modules/libs/myFeature1'",
             filename: "src/custom/folder/file.ts",
