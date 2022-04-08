@@ -99,7 +99,8 @@ describe('createUtils', function () {
                 raw: '@modules/apps/demo/pages/page1/file.js',
                 realPath: '/root/src/modules/apps/demo/pages/page1/file.js',
                 path: '/root/src/modules/apps/*/pages/page1/file.js',
-                wildcard: 'demo'
+                wildcard: 'demo',
+                wildcardPrefix: '/root/src/modules/apps/'
             });
         });
     });
