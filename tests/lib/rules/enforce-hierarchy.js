@@ -69,7 +69,7 @@ ruleTester.run("enforce-hierarchy", rule, {
             filename: "@modules/apps/app1/features/feature1/MyFeature.tsx",
             options,
         }),
-        test({ // Import from the same wildcard path
+        test({ // Import from the same wildcard path but different categories
             code: "import { fn } from '@modules/apps/app1/libs/feature2'",
             filename: "@modules/apps/app1/features/feature1/MyFeature.tsx",
             options,
