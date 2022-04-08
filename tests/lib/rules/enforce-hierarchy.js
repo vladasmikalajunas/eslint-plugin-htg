@@ -63,6 +63,15 @@ ruleTester.run("enforce-hierarchy", rule, {
             code: "import { fn } from 'src/another/custom/folder/file'",
             filename: "src/custom/folder/file.ts",
             options,
+        }),
+        test({ // Import from allowed wildcard path
+            code: "import { fn } from '@modules/apps/app1/features/app1Feature'",
+            filename: "@modules/apps/app2/features/app2Feature/MyFeature.tsx",
+            options: [options[0], {
+                allowedWildcardPaths: {
+                    '@modules/apps/app2': ['@modules/apps/app1']
+                }
+            }],
         })
     ],
 

@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-htg",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "HTG eslint plugin",
   "keywords": [
     "eslint",
